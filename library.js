@@ -86,9 +86,106 @@ var addPlaylist = function (name) {
 // STRETCH:
 // given a query string string, prints a list of tracks
 // where the name, artist or album contains the query string (case insensitive)
-// tip: use "string".search("tri") 
+// tip: use "string".search("tri")
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/search
 
 var printSearchResults = function(query) {
 
+};
+
+function Library (name, creator){
+  console.log('Library Constructor This', this);
+  this.name = name;
+  this.creator = creator;
+  this.playlists = [];
+  this.tracks = [];
+
+};
+
+
+function Track(name, length, rating){
+  this.name = name;
+  this.length = length;
+  this.rating = rating;
+
+};
+
+function Playlist(name){
+  this.name = name;
+  this.tracklist = [];
 }
+
+
+Playlist.prototype.addTrack = function(track){
+  this.tracklist.push(track);
+};
+
+
+
+Library.prototype.addPlaylist = function(playlist){
+  this.playlists.push(playlist);
+};
+
+Library.prototype.addTrack= function(track){
+  this.tracks.push(track);
+}
+
+
+///////////////////////
+var firstTrack = new Track("trackname", 10, 5);
+var secondTrack = new Track("code Monkey", 23, 3);
+var thirdTrack = new Track("Model", 14, 4);
+var fourthTrack = new Track("Beach", 30, 5);
+
+var mylibrary = new Library ("Shahab", "me");
+
+var myplaylist = new Playlist("myplaylist");
+var secondPlayList = new Playlist("second play list");
+var thirdPlayList = new Playlist("third play list");
+
+myplaylist.addTrack(firstTrack);
+myplaylist.addTrack(secondTrack);
+
+secondPlayList.addTrack(thirdTrack);
+secondPlayList.addTrack(secondTrack);
+
+thirdPlayList.addTrack(firstTrack);
+thirdPlayList.addTrack(secondTrack);
+thirdPlayList.addTrack(fourthTrack);
+
+mylibrary.addPlaylist(myplaylist);
+mylibrary.addPlaylist(secondPlayList);
+mylibrary.addPlaylist(thirdPlayList);
+
+
+// this function calculates the overal rating of a playlist
+
+Playlist.prototype.overallRating = function(){
+  var result =0;
+
+  if(this.tracklist.length === 0){
+    console.log(this.name, " is empty");
+  }else{
+    this.tracklist.forEach(function(track){
+      result = result + track.rating;
+
+    });
+    console.log("the overal rating for " + this.name + " is " +result/this.tracklist.length);
+  };
+
+};
+
+myplaylist.overallRating();
+
+Playlist.prototype.totalDuration =function(){
+  var result = 0;
+  this.tracklist.forEach(function(track){
+      result = result + track.length;
+
+  });
+  console.log("The total duration for " + this.name+ " is " +result);
+}
+
+myplaylist.totalDuration();
+
+
